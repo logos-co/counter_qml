@@ -14,8 +14,8 @@
       });
     in
     {
-      packages = forAllSystems ({ pkgs }: {
-        default = pkgs.stdenv.mkDerivation {
+      packages = forAllSystems ({ pkgs }: let
+        plugin = pkgs.stdenv.mkDerivation {
           pname = "logos-counter-qml-plugin";
           version = "1.0.0";
           src = ./.;
@@ -26,7 +26,7 @@
           installPhase = ''
             runHook preInstall
 
-            dest="$out/qml_plugins/counter_qml"
+            dest="$out/lib"
             mkdir -p "$dest/icons"
 
             cp $src/Main.qml "$dest/Main.qml"
@@ -42,6 +42,9 @@
             platforms = platforms.unix;
           };
         };
+      in {
+        default = plugin;
+        lib = plugin;
       });
     };
 }
