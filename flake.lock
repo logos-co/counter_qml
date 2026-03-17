@@ -5,11 +5,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1770132997,
-        "narHash": "sha256-Iv0QMXMD6kf+y2Qx37jXR7Ik6h1dqOzuxBzCdc5S6KA=",
+        "lastModified": 1773672219,
+        "narHash": "sha256-p+kv2WHokT40rScnSFSIDp/EeFLaDUsTHW6QT6ejKuc=",
         "owner": "logos-co",
         "repo": "logos-cpp-sdk",
-        "rev": "30ef7986f4b65b7dcf43af84bb073233b1b77821",
+        "rev": "a4bd66cd6eb04ee7140bb940b1d49d72d60248de",
         "type": "github"
       },
       "original": {
