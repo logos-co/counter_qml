@@ -13,10 +13,18 @@ Item {
     property string imageStatus: "Not run"
     property string qfileStatus: "Not run"
 
+    Flickable {
+        anchors.fill: parent
+        contentHeight: contentCol.implicitHeight + 48
+        clip: true
+
     ColumnLayout {
-        anchors.centerIn: parent
+        id: contentCol
+        anchors.top: parent.top
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.topMargin: 24
         spacing: 18
-        width: Math.min(parent.width, 440)
+        width: Math.min(parent.width - 48, 440)
 
         Text {
             text: "QML Counter"
@@ -67,21 +75,15 @@ Item {
         }
 
         Text {
-            text: "Send a value to package_manager.testPluginCall and view the response."
+            text: "Call package_manager methods via the logos bridge."
             color: "#57606a"
             wrapMode: Text.WordWrap
             Layout.fillWidth: true
         }
 
-        TextField {
-            id: inputField
-            placeholderText: "Enter a value for testPluginCall"
-            Layout.fillWidth: true
-        }
-
         Button {
             id: sendButton
-            text: "Send to package_manager"
+            text: "Get valid variants"
             Layout.alignment: Qt.AlignLeft
 
             contentItem: Text {
@@ -110,8 +112,8 @@ Item {
 
                 root.apiResult = logos.callModule(
                             "package_manager",
-                            "testPluginCall",
-                            [inputField.text]
+                            "getValidVariants",
+                            []
                         );
             }
         }
@@ -261,4 +263,5 @@ Item {
                 }
                 Text { text: "QFile status: " + root.qfileStatus; color: "#825f2e"; Layout.fillWidth: true }
     }
+    } // Flickable
 }
