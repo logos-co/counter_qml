@@ -5,7 +5,7 @@
   "author": "Logos Core Team",
   "type": "ui_qml",
   "pluginType": "qml",
-  "main": "Main.qml",
+  "view": "Main.qml",
   "dependencies": [],
   "category": "misc",
   "capabilities": [],
