@@ -2,49 +2,13 @@
   description = "Counter QML Plugin for Logos - A simple counter implemented entirely in QML";
 
   inputs = {
-    logos-nix.url = "github:logos-co/logos-nix";
-    nixpkgs.follows = "logos-nix/nixpkgs";
+    logos-module-builder.url = "github:logos-co/logos-module-builder";
   };
 
-  outputs = { self, logos-nix, nixpkgs }:
-    let
-      systems = [ "aarch64-darwin" "x86_64-darwin" "aarch64-linux" "x86_64-linux" ];
-      forAllSystems = f: nixpkgs.lib.genAttrs systems (system: f {
-        pkgs = import nixpkgs { inherit system; };
-      });
-    in
-    {
-      packages = forAllSystems ({ pkgs }: let
-        plugin = pkgs.stdenv.mkDerivation {
-          pname = "logos-counter-qml-plugin";
-          version = "1.0.0";
-          src = ./.;
-
-          dontUnpack = false;
-          phases = [ "unpackPhase" "installPhase" ];
-
-          installPhase = ''
-            runHook preInstall
-
-            dest="$out/lib"
-            mkdir -p "$dest/icons"
-
-            cp $src/Main.qml "$dest/Main.qml"
-            cp $src/metadata.json "$dest/metadata.json"
-            cp $src/icons/counter.png "$dest/icons/counter.png"
-
-            runHook postInstall
-          '';
-
-          meta = with pkgs.lib; {
-            description = "Counter QML Plugin for Logos";
-            license = licenses.mit;
-            platforms = platforms.unix;
-          };
-        };
-      in {
-        default = plugin;
-        lib = plugin;
-      });
+  outputs = inputs@{ logos-module-builder, ... }:
+    logos-module-builder.lib.mkLogosQmlModule {
+      src = ./.;
+      configFile = ./metadata.json;
+      flakeInputs = inputs;
     };
 }
